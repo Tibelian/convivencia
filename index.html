@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <!-- etiquetas meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- titulo sitio -->
+    <title>Convivencia - 2ºDAW TID</title>
+
+    <!-- estilo -->
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <!-- funcionamiento js -->
+    <script src="js/utilidades.js"></script>
+    <script src="js/operaciones.js"></script>
+    <script src="js/nucleo.js"></script>
+
+</head>
+<body>
+    
+    <!-- barra lateral -->
+    <aside>
+        <header>
+            <h1>Convivencia</h1>
+            <div id="profesor"></div>
+            <div id="reloj"></div>
+        </header>
+        <nav>
+            <ul>
+                <li><button onclick="mostrarInicio()">Inicio</button></li>
+                <li class="logged-out"><button onclick="mostrarLogin()">Acceder</button></li>
+                <li class="logged-out"><button onclick="mostrarClavePerdida()">Clave olvidada</button></li>
+                <li class="logged-in"><button onclick="mostrarAmonestaciones()">Amonestaciones</button></li>
+                <li class="logged-in"><button onclick="mostrarSanciones()">Sanciones</button></li>
+                <li class="logged-in"><button onclick="mostrarExpulsiones()">Expulsiones</button></li>
+                <li class="logged-in"><button onclick="mostrarListados()">Listados</button></li>
+                <li class="logged-in"><button onclick="salir()">Salir</button></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- alertas dinámicas -->
+    <div id="contenedor-alertas"></div>
+
+    <!-- contenido principal -->
+    <main id="principal" class="shadow-in"></main>
+
+</body>
+</html>
