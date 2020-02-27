@@ -4,6 +4,7 @@ function mostrarInicio(){
 
     let principal = document.getElementById("principal");
     eliminarContenido(principal);
+    activarBoton("Inicio");
 
     let titulo = document.createElement("h3");
         titulo.appendChild(document.createTextNode("Ventajas de nuestro gestor:"));
@@ -76,6 +77,7 @@ function mostrarClavePerdida(){
     
     let principal = document.getElementById("principal");
     eliminarContenido(principal);
+    activarBoton("Clave olvidada");
 
 }
 
@@ -84,6 +86,7 @@ function mostrarAcceder(){
 
     let principal = document.getElementById("principal");
     eliminarContenido(principal);
+    activarBoton("Acceder");
 
     let login = document.createElement("div");
         login.classList.add("login"); 
@@ -103,12 +106,13 @@ function mostrarAcceder(){
     let inputClave = document.createElement("input");
         inputClave.placeholder = "Contraseña";
         inputClave.type = "password";
+        inputClave.autocomplete = "off";
         contenedorClave.appendChild(inputClave);
 
     let inputEnviar = document.createElement("button");
         inputEnviar.classList.add("enviar");
         inputEnviar.appendChild(document.createTextNode("Iniciar sesión"));
-        inputEnviar.onclick = enviarLogin;
+        inputEnviar.onclick = () => { enviarLogin(inputUsuario, inputClave); };
         login.appendChild(inputEnviar);
 
 
@@ -142,6 +146,7 @@ function mostrarAmonestaciones(){
     let principal = document.getElementById("principal");
         principal.style.justifyContent = "center";
         eliminarContenido(principal);
+        activarBoton("Amonestaciones");
 
     let botonNueva = document.createElement("button");
         botonNueva.appendChild(document.createTextNode("+ Nueva Amonestación"));
@@ -191,9 +196,9 @@ function nuevaAmonestacion(){
         titulo.appendChild(document.createTextNode("Nueva amonestación"));
         amonestar.appendChild(titulo);
 
+
     let grupoGrupos = document.createElement("div");
         grupoGrupos.classList.add("grupo");
-        amonestar.appendChild(grupoGrupos);
     let labelGrupos = document.createElement("label");
         labelGrupos.appendChild(document.createTextNode("Seleccione el grupo:"));
         grupoGrupos.appendChild(labelGrupos);
@@ -203,16 +208,20 @@ function nuevaAmonestacion(){
     
     let grupoAsignaturas = document.createElement("div");
         grupoAsignaturas.classList.add("grupo");
-        amonestar.appendChild(grupoAsignaturas);
     let labelAsignaturas = document.createElement("label");
         labelAsignaturas.appendChild(document.createTextNode("Asignatura:"))
         grupoAsignaturas.appendChild(labelAsignaturas);
     let inputAsignaturas = document.createElement("select");
         grupoAsignaturas.appendChild(inputAsignaturas);
+
+    let fila1 = document.createElement("div");
+        fila1.classList.add("fila");
+        fila1.appendChild(grupoGrupos);
+        fila1.appendChild(grupoAsignaturas);
+        amonestar.appendChild(fila1);
     
     let grupoAlumnos = document.createElement("div");
         grupoAlumnos.classList.add("grupo");
-        amonestar.appendChild(grupoAlumnos);
     let labelAlumnos = document.createElement("label");
         labelAlumnos.appendChild(document.createTextNode("Alumno:"))
         grupoAlumnos.appendChild(labelAlumnos);
@@ -223,16 +232,6 @@ function nuevaAmonestacion(){
         obtenerAsignaturas(inputAsignaturas, inputGrupos.value);
         obtenerAlumnos(inputAlumnos, inputGrupos.value);
     }
-
-    let grupoCausa = document.createElement("div");
-        grupoCausa.classList.add("grupo");
-        amonestar.appendChild(grupoCausa);
-    let labelCausa = document.createElement("label");
-        labelCausa.appendChild(document.createTextNode("Introduce la causa:"))
-        grupoCausa.appendChild(labelCausa);
-    let inputCausa = document.createElement("textarea");
-        inputCausa.rows = 6;
-        grupoCausa.appendChild(inputCausa);
 
     let fechaObj = new Date();
     let d = fechaObj.getDate();
@@ -249,7 +248,6 @@ function nuevaAmonestacion(){
 
     let grupoFecha = document.createElement("div");
         grupoFecha.classList.add("grupo");
-        amonestar.appendChild(grupoFecha);
     let labelFecha = document.createElement("label");
         labelFecha.appendChild(document.createTextNode("Fecha:"))
         grupoFecha.appendChild(labelFecha);
@@ -257,6 +255,22 @@ function nuevaAmonestacion(){
         inputFecha.type = "date";
         inputFecha.value = fechaActual;
         grupoFecha.appendChild(inputFecha);
+
+    let fila2 = document.createElement("div");
+    fila2.classList.add("fila");
+    fila2.appendChild(grupoAlumnos);
+    fila2.appendChild(grupoFecha);
+    amonestar.appendChild(fila2);
+
+    let grupoCausa = document.createElement("div");
+        grupoCausa.classList.add("grupo");
+        amonestar.appendChild(grupoCausa);
+    let labelCausa = document.createElement("label");
+        labelCausa.appendChild(document.createTextNode("Introduce la causa:"))
+        grupoCausa.appendChild(labelCausa);
+    let inputCausa = document.createElement("textarea");
+        inputCausa.rows = 6;
+        grupoCausa.appendChild(inputCausa);
 
     let boton = document.createElement("button");
         boton.appendChild(document.createTextNode("Guardar amonestación"));
@@ -276,3 +290,6 @@ function nuevaAmonestacion(){
 }
 
 
+function mostrarExpulsiones(){}
+function mostrarSanciones(){}
+function mostrarListado(){}

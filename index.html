@@ -12,6 +12,7 @@
 
     <!-- estilo -->
     <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/fontawesome/all.min.css">
 
     <!-- funcionamiento js -->
     <script src="js/modulos/profesor.js"></script>
@@ -23,22 +24,28 @@
 
 </head>
 <body>
+
+    <!-- contenido principal -->
+    <main id="principal"></main>
     
     <!-- barra lateral -->
     <aside>
-        <header>
-            <h1>Convivencia</h1>
-            <div id="profesor"></div>
-            <div id="reloj"></div>
-        </header>
+        <h1>Convivencia</h1>
+        <div class="profesor"><i class="fas fa-user-circle fa-3x"></i> <span id="nombre-profesor">Invitado</span></div>
         <nav></nav>
     </aside>
 
+    <!-- encabezado -->
+    <header>
+        <button onclick="ocultarMenu()"><i class="fas fa-bars" id="icono-menu"></i></button>
+        <div class="reloj">
+            <i class="fas fa-clock"></i>
+            <div id="reloj"></div>
+        </div>
+    </header>
+
     <!-- alertas dinámicas -->
     <div id="contenedor-alertas"></div>
-
-    <!-- contenido principal -->
-    <main id="principal" class="shadow-in"></main>
 
 </body>
 </html>

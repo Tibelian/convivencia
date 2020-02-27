@@ -74,9 +74,9 @@ function muestraAlerta(css, msg, close = true){
 }
 
 
-//
-// 
-//
+///////////////////////////////
+// FECHA CON FORMATO EUROPEO //
+///////////////////////////////
 function formatoFecha(fecha){          
     let laFecha = new Date(fecha);
     let anno = laFecha.getUTCFullYear();
@@ -86,3 +86,4 @@ function formatoFecha(fecha){
     if(dia < 10){ dia = `0${dia}`; }
     return `${dia}/${mes}/${anno}`;
 }
+
