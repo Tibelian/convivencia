@@ -14,8 +14,11 @@
     <link rel="stylesheet" href="css/estilo.css">
 
     <!-- funcionamiento js -->
+    <script src="js/modulos/profesor.js"></script>
     <script src="js/utilidades.js"></script>
     <script src="js/operaciones.js"></script>
+    <script src="js/generador.js"></script>
+    <script src="js/rutas.js"></script>
     <script src="js/nucleo.js"></script>
 
 </head>
@@ -28,18 +31,7 @@
             <div id="profesor"></div>
             <div id="reloj"></div>
         </header>
-        <nav>
-            <ul>
-                <li><button onclick="mostrarInicio()">Inicio</button></li>
-                <li class="logged-out"><button onclick="mostrarLogin()">Acceder</button></li>
-                <li class="logged-out"><button onclick="mostrarClavePerdida()">Clave olvidada</button></li>
-                <li class="logged-in"><button onclick="mostrarAmonestaciones()">Amonestaciones</button></li>
-                <li class="logged-in"><button onclick="mostrarSanciones()">Sanciones</button></li>
-                <li class="logged-in"><button onclick="mostrarExpulsiones()">Expulsiones</button></li>
-                <li class="logged-in"><button onclick="mostrarListados()">Listados</button></li>
-                <li class="logged-in"><button onclick="salir()">Salir</button></li>
-            </ul>
-        </nav>
+        <nav></nav>
     </aside>
 
     <!-- alertas dinámicas -->
