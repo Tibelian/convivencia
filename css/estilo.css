@@ -16,13 +16,11 @@ body{
     min-height: 100vh;
     display: flex;
     background-color: #f9f9f9;
-    font-family: monospace
+    font-family: 'Spartan';
 }
-body.in .logged-out{
-    display: none;
-}
-body.out .logged-in{
-    display: none;
+@font-face {
+    font-family: 'Spartan';
+    src: url('./Spartan-Regular.ttf');
 }
 
 
@@ -30,51 +28,74 @@ body.out .logged-in{
 barra lateral
 */
 aside{
-    width: 250px;
-    background-color: #444444;
+    width: 230px;
+    background-color: rgb(34, 45, 50);
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     color: #ffffff;
 }
-aside header{
+aside h1{
+    text-transform: capitalize;
+    font-size: 22px;
+    text-align: center;
+    background-color: rgb(54, 127, 169);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-aside header h1{
-    padding: 20px 10px 20px 10px;
-    text-transform: uppercase;
+    height: 50px;
 }
 aside nav ul{
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    padding: 10px;
     margin-top: 10px;
 }
 aside nav ul li{
     display: flex;
     justify-content: start;
-    margin-bottom: 5px;
 }
 aside nav ul li button{
     background-color: transparent;
-    box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, .2);
     padding: 10px;
     padding-left: 15px;
     border: 0;
+    border-left: 3px solid transparent;
     cursor: pointer;
     width: 100%;
     text-align: left;
     color: #ffffff;
-    border-radius: 5px;
+    font-size: 15px;
+    border-radius: 0;
 }
-aside nav ul li button:hover, aside nav ul li button.activo{
+aside nav ul li button i{
+    width: 25px;
+}
+aside nav ul li button:hover{
     background-color: rgba(0, 0, 0, .1);
     display: block;
+}
+aside nav ul li button.active{
+    background-color: rgb(30, 40, 44);
+    border-color: rgb(60, 141, 188);
+}
+
+
+/*
+encabezado
+*/
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    position: fixed;
+    top: 0;
+    left: 230px;
+    right: 0;
+    background-color: rgb(60, 141, 188);
+    color: #fff;
 }
 
 
@@ -99,6 +120,11 @@ formularios
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
+    width: 100%;
+}
+.fila{
+    display: flex;
+    justify-content: space-between;
 }
 .login{
     display: flex;
@@ -114,17 +140,25 @@ formularios
 .login .input{
     width: 100%;
 }
-.enviar, button{
+button{
+    padding: 10px;
+    border: 0;
+    cursor: pointer;
+    transition: all .5s;
+    background-color: rgb(60, 141, 188);
+    color: #ffffff;
+}
+.enviar{
     margin: 0 auto 0 auto;
-    background-color: #333333;
+    background-color: rgb(60, 141, 188);
     color: #ffffff;
     padding: 10px;
     border: 0;
     cursor: pointer;
     transition: all .5s;
 }
-.enviar:hover, button:hover{
-    background-color: #555555;
+.enviar:hover{
+    background-color: rgb(54, 127, 169);
 }
 input, select, textarea{
     padding: 8px;
@@ -142,16 +176,15 @@ amonestaciones
     width: 75%;
     text-align: center;
     padding-bottom: 20px;
-    border: 1px solid #333333;
 }
 .amonestar h2{
-    background-color: #444444;
-    box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, .2);
+    background-color: rgb(60, 141, 188);
     color: #fff;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 20px;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 20px;
 }
 .amonestar label{
     margin-bottom: 5px;
@@ -183,23 +216,40 @@ amonestaciones
     box-shadow:         inset 0 0 20px 20px rgba(0, 0, 0, .1);
 }
 .shadow-out{
-    -moz-box-shadow:     0 0 5px 5px rgba(0, 0, 0, .1);
-    -webkit-box-shadow:  0 0 5px 5px rgba(0, 0, 0, .1);
-    box-shadow:          0 0 5px 5px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, .1);
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, .1);
 }
 
 
 /*
 avatar profesor
 */
-#profesor:not(:empty) {
+.profesor{
     padding: 10px;
-    margin-bottom: 10px;
-    background-color: rgba(0, 0, 0, .2);
-    border-radius: 10px;
+    margin: 10px 0 10px 0;
+    display: flex;
+    align-items: center;
+}
+.profesor i{
+    margin-right: 10px;
 }
 
-
+.reloj{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .2);
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 14px;
+    width: 100px;
+    border-radius: 5px;
+}
+.reloj i{
+    color: rgba(255, 255, 255, .5);
+    font-size: 13px;
+}
 
 
 /*
@@ -207,7 +257,7 @@ alertas
 */
 #contenedor-alertas{
     position: fixed;
-    top: 0;
+    top: 50px;
     right: 0;
     z-index: 9999;
 }
@@ -218,7 +268,7 @@ alertas
     animation: myAlert 1s;
     border: 1px solid #000;
     right: 20px;
-    max-width: 250px;
+    max-width: 350px;
 }
 @keyframes myAlert {
     0% {
@@ -253,9 +303,9 @@ alertas
 
 .animate{
     position: relative;
-    animation: turn 2s;
+    animation: hola 1s;
 }
-@keyframes turn {
+@keyframes hola {
     0% {
         opacity: 0;
     }
