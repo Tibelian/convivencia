@@ -124,7 +124,7 @@ formularios
 }
 .fila{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .login{
     display: flex;
@@ -148,17 +148,19 @@ button{
     background-color: rgb(60, 141, 188);
     color: #ffffff;
 }
-.enviar{
-    margin: 0 auto 0 auto;
+.enviar, .volver{
+    width: auto !important;
     background-color: rgb(60, 141, 188);
     color: #ffffff;
-    padding: 10px;
-    border: 0;
-    cursor: pointer;
-    transition: all .5s;
 }
 .enviar:hover{
     background-color: rgb(54, 127, 169);
+}
+.volver{
+    background-color: rgb(34, 45, 50);
+}
+.volver:hover{
+    background-color: rgb(30, 40, 44);
 }
 input, select, textarea{
     padding: 8px;
@@ -176,15 +178,13 @@ amonestaciones
     width: 75%;
     text-align: center;
     padding-bottom: 20px;
+    border: 1px solid rgb(34, 45, 50);
+    position: relative;
 }
-.amonestar h2{
-    background-color: rgb(60, 141, 188);
-    color: #fff;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 20px;
+.amonestar-listado{
+    background-color: #fff;
+    width: 75%;
+    text-align: center;
 }
 .amonestar label{
     margin-bottom: 5px;
@@ -195,16 +195,41 @@ amonestaciones
 .amonestar select:empty{
     cursor: not-allowed!important;
 }
-.amonestar table{
-    width: calc(100% - 40px);
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+.amonestar-listado table{
+    width: 100%;
     border-collapse: collapse;
 }
-.amonestar table td, .amonestar table th{
+.amonestar-listado table td{
     padding: 5px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid rgba(0, 0, 0, .2)
+}
+.amonestar-listado table th{
+    padding: 10px;
+    border: 1px solid rgb(30, 40, 44);
+}
+.amonestar-listado table tr:hover td{
+    background-color: rgba(0, 0, 0, .05);
+}
+.amonestar-listado table th{
+    background-color: rgb(30, 40, 44);
+    color: #fff;
+}
+.amonestar .titulo{
+    background-color: rgb(34, 45, 50);
+    color: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.amonestar .titulo h2{
+    font-size: 20px;
+}
+.amonestar .titulo button{
+    border-radius: 0;
+    height: 100%;
+    margin-left: 5px;
 }
 
 
@@ -260,15 +285,21 @@ alertas
     top: 50px;
     right: 0;
     z-index: 9999;
+    width: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
 }
 .alert{
     position: relative;
     padding: 10px;
     margin-top: 20px;
     animation: myAlert 1s;
-    border: 1px solid #000;
-    right: 20px;
-    max-width: 350px;
+    border-bottom: 3px solid #000;
+    right: 40px;
+    text-align: center;
+    width: 250px;
+    color: #fff;
 }
 @keyframes myAlert {
     0% {
@@ -277,25 +308,35 @@ alertas
     }
     100% { 
         opacity: 1;
-        right: 20px;
+        right: 40px;
     }
 }
 .alert.warning{
-    background-color: rgba(200, 0, 0, .5);
-    border-color: rgba(200, 0, 0, .8);
+    background-color: rgb(200, 0, 0);
+    border-color: rgb(150, 0, 0);
 }
-.alert.success{
-    background-color: rgba(0, 200, 0, .5);
-    border-color: rgba(0, 200, 0, .8);
+.alert.success, .alert.success .close{
+    background-color: rgb(0, 200, 0);
+    border-color: rgb(0, 150, 0);
 }
 .alert .close{
-    margin-left: 10px;
-    background-color: transparent;
-    padding: 5px;
-    color: #000000;
+    position: absolute;
+    top: 0;
+    right: -20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: calc(100% + 3px);
+    border-radius: 0;
 }
-
-
+.alert.warning .close{
+    background-color: rgb(150, 0, 0);
+}
+.alert.success .close{
+    background-color: rgb(0, 150, 0);
+}
 
 
 
