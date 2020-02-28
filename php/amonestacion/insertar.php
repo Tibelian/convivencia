@@ -12,24 +12,34 @@ if(
     isset($_GET['fecha'])
 ){
 
-    require 'conexion.php';
+    require '../conexion.php';
     $conexion->select_db("bd_convivencia");
 
     ////////////////////////////////
     $conexion->autocommit(false); //
     ////////////////////////////////
 
-    $sqlCausa = "
-        INSERT INTO causa_amonestacion(id, denominacion)
-        VALUES(NULL, ?)
-    ";
-    $stmtCausa = $conexion->stmt_init();
-    $stmtCausa->prepare($sqlCausa);
-    $stmtCausa->bind_param("s", $_GET['causa']);
-    
-    if($stmtCausa->execute()){
+    $ok = true;
+    if(is_numeric($_GET['causa'])){
+        $id_causa = $_GET['causa'];
+    }else{
+        $sqlCausa = "
+            INSERT INTO causa_amonestacion(id, denominacion)
+            VALUES(NULL, ?)
+        ";
+        $stmtCausa = $conexion->stmt_init();
+        $stmtCausa->prepare($sqlCausa);
+        $stmtCausa->bind_param("s", $_GET['causa']);
+        if($stmtCausa->execute()){
+            $id_causa = $stmtCausa->insert_id;
+        }else{
+            $ok = false;
+            $conexion->rollback();
+            $msg = ["resultado" => "ERROR", "datos" => "No se ha podido introducir la causa - " . $stmtCausa->error];
+        }
+    }
 
-        $id_causa = $stmtCausa->insert_id;
+    if($ok){
         $sql = "
             INSERT INTO amonestacion(id, id_alumno, id_profesor, id_asignatura, id_causa, fecha)
             VALUES(NULL, ?, ?, ?, ?, ?);
@@ -52,10 +62,6 @@ if(
             $conexion->rollback();
             $msg = ["resultado" => "ERROR", "datos" => "Ha occurrido un error al guardar la amonestación - " . $stmt->error];
         }
-    
-    }else{
-        $conexion->rollback();
-        $msg = ["resultado" => "ERROR", "datos" => "No se ha podido introducir la causa - " . $stmtCausa->error];
     }
 
     ////////////////////////////////

@@ -1,6 +1,6 @@
 <?php
 
-require 'conexion.php';
+require '../conexion.php';
 
 if(isset($_GET['id_profesor']) && isset($_GET['id_grupo'])){
 
@@ -26,7 +26,7 @@ if(isset($_GET['id_profesor']) && isset($_GET['id_grupo'])){
         }
 
     }else{
-        $msg = ["resultado" => "ERROR", "datos" => "No se han podido ejecutar la consulta 'obtenerAsiganturas' - " . $conexion->error];
+        $msg = ["resultado" => "ERROR", "datos" => "No se han podido ejecutar la consulta 'asignatura/listar' - " . $conexion->error];
     }
 
 }else{

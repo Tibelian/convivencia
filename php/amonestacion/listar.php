@@ -1,11 +1,11 @@
 <?php
 
-require 'conexion.php';
+require '../conexion.php';
 
 $conexion->select_db("bd_convivencia");
 $sql = "
     SELECT a.nombre as nombre_alumno, a.apellidos as apellidos_alumno,
-            p.nombre as nombre_profesor, a.apellidos as apellidos_profesor,
+            p.nombre as nombre_profesor, p.apellidos as apellidos_profesor,
             am.fecha, c.denominacion as causa 
     FROM bd_convivencia.amonestacion am
     INNER JOIN bd_datos.alumno a
