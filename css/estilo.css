@@ -35,7 +35,38 @@ aside{
     left: 0;
     bottom: 0;
     color: #ffffff;
+    transition: all .5s;
+    animation: openMenu .5s;
 }
+aside.oculto{
+    height: 50px;
+    animation: closeMenu 1s;
+}
+@keyframes closeMenu{
+    0%{
+        height: 100%;
+    }
+    100%{
+        height: 50px;
+    }
+}
+@keyframes openMenu{
+    0%{
+        height: 50px;
+    }
+    100%{
+        height: 100%;
+    }
+}
+aside nav, aside .profesor{
+    transition: all .5s;
+}
+aside.oculto nav, aside.oculto .profesor{
+    visibility: hidden;
+    opacity: 0;
+    transition: all .5s;
+}
+
 aside h1{
     text-transform: capitalize;
     font-size: 22px;
@@ -109,6 +140,11 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: all .5s;
+}
+main.w100{
+    width: 100%;
+    transition: all 1s;
 }
 
 /*
@@ -185,6 +221,7 @@ amonestaciones
     background-color: #fff;
     width: 75%;
     text-align: center;
+    overflow-x: auto;
 }
 .amonestar label{
     margin-bottom: 5px;
@@ -355,3 +392,36 @@ alertas
     }
 }
 
+
+
+span.pendiente{
+    padding: 3px;
+    background-color: rgba(150, 85, 0, 0.7);
+    font-size: 14px;
+}
+span.expulsado{
+    padding: 3px;
+    background-color: rgba(67, 150, 0, 0.7);
+    font-size: 14px;
+}
+span.cancelada{
+    padding: 3px;
+    background-color: rgba(150, 22, 0, 0.7);
+    font-size: 14px;
+}
+
+#icono-menu i{
+    transition: all .5s;
+    transform: rotate(0deg);
+}
+#icono-menu:hover i{
+    transition: all 1s;
+    transform: rotate(360deg);
+}
+
+
+@media only screen and (max-width: 900px) {   
+    main{
+        width: 100%;
+    }
+}

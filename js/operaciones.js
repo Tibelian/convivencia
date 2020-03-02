@@ -270,8 +270,11 @@ function obtenerExpulsiones(tabla){
                         let fecha = document.createElement("td");
                             fecha.appendChild(document.createTextNode(formatoFecha(myJson.datos[i].fecha)));
                             tr.appendChild(fecha);
+                        let spanEstado = document.createElement("span");
+                            spanEstado.classList.add(myJson.datos[i].control_jefatura);
                         let estado = document.createElement("td");
-                            estado.appendChild(document.createTextNode(myJson.datos[i].control_jefatura));
+                            spanEstado.appendChild(document.createTextNode(myJson.datos[i].control_jefatura));
+                            estado.appendChild(spanEstado);
                             tr.appendChild(estado);
                         tabla.appendChild(tr);
                     }

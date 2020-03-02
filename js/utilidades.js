@@ -87,3 +87,15 @@ function formatoFecha(fecha){
     return `${dia}/${mes}/${anno}`;
 }
 
+
+//
+//
+//
+function ocultarMenu(){
+
+    let aside = document.getElementsByTagName("aside")[0];
+        aside.classList.toggle("oculto");
+    let main = document.getElementById("principal");
+        main.classList.toggle("w100");
+
+}
