@@ -552,7 +552,7 @@ function nuevaExpulsion(){
         botonVolver.appendChild(iconoVolver);
         botonVolver.appendChild(document.createTextNode(" Vovler"));
         botonVolver.classList.add("volver");
-        botonVolver.onclick = mostrarAmonestaciones;
+        botonVolver.onclick = mostrarExpulsiones;
         filaBotones.appendChild(botonVolver);
 
     let boton = document.createElement("button");
@@ -562,11 +562,9 @@ function nuevaExpulsion(){
         boton.appendChild(document.createTextNode(" Guardar"));
         boton.classList.add("enviar");
         boton.onclick = () => {
-            let causa = 0;
+            let causa = selectCausa.value;
             if(inputCausa){
                 causa = inputCausa.value;
-            }else{
-                causa = selectCausa.value;
             }
             let datos = {
                 grupo: inputGrupos.value, 

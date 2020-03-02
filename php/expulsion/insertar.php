@@ -58,6 +58,14 @@ if(
         if($stmt->execute()){
             $conexion->commit(true);
             $msg = ["resultado" => "OK", "datos" => "La solicitud de la expulsión ha sido guardada con éxito"];
+            
+            // se envía el correo
+            $mensaje = "
+                <p>Señor Jefe de Estudios, <br> Le notificamos en un profesor ha solicitado la expulsión de un alumno.</p>
+                <p>Para más información acceda a la aplicación web 'Convivencia'.</p>
+            ";
+            mail("iuliandafinescu@gmail.com", "Convivencia - Solicitud de expulsión", $mensaje);
+
         }else{
             $conexion->rollback();
             $msg = ["resultado" => "ERROR", "datos" => "Ha occurrido un error al guardar la solicitud de expulsión - " . $stmt->error];

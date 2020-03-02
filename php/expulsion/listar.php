@@ -6,7 +6,7 @@ $conexion->select_db("bd_convivencia");
 $sql = "
     SELECT a.nombre as nombre_alumno, a.apellidos as apellidos_alumno,
             p.nombre as nombre_profesor, p.apellidos as apellidos_profesor,
-            ex.fecha, c.denominacion as causa 
+            ex.fecha, c.denominacion as causa, ex.control_jefatura
     FROM bd_convivencia.expulsion ex
     INNER JOIN bd_datos.alumno a
     ON a.id = ex.id_alumno
