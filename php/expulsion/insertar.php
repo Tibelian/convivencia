@@ -56,6 +56,7 @@ if(
         );
     
         if($stmt->execute()){
+
             $conexion->commit(true);
             $msg = ["resultado" => "OK", "datos" => "La solicitud de la expulsión ha sido guardada con éxito"];
             
@@ -64,7 +65,11 @@ if(
                 <p>Señor Jefe de Estudios, <br> Le notificamos en un profesor ha solicitado la expulsión de un alumno.</p>
                 <p>Para más información acceda a la aplicación web 'Convivencia'.</p>
             ";
-            mail("iuliandafinescu@gmail.com", "Convivencia - Solicitud de expulsión", $mensaje);
+            if(@mail("iuliandafinescu@gmail.com", "Convivencia - Solicitud de expulsión", $mensaje)){
+                $msg["datos"] .= " - El jefe de estudios ha sido notificado por correo sobre esta expulsión.";
+            }else{
+                $msg["datos"] .= " - Pero no se ha podido notificar al jefe de estudios por correo.";
+            }
 
         }else{
             $conexion->rollback();
