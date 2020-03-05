@@ -425,3 +425,34 @@ span.cancelada{
         width: 100%;
     }
 }
+
+
+.listado{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    width: 77%;
+}
+.listado li button{
+    width: 200px;
+}
+.listado-tabla{
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 20px;
+}
+.listado-tabla thead th{
+    background-color: rgb(30, 40, 44);
+    color: #fff;
+    text-transform: uppercase;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+.listado-tabla tbody td{
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+

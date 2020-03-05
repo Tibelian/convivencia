@@ -104,7 +104,7 @@ function obtenerAsignaturas(select, id_grupo){
 //////////////////////////////////////////////////////////
 // CREA EL DOM DE UN SELECT CON LOS ALUMNOS DE UN GRUPO //
 //////////////////////////////////////////////////////////
-function obtenerAlumnos(select, id_grupo){
+function obtenerAlumnos(select, id_grupo = 0){
     fetch(`./php/alumno/listar.php?id_grupo=${id_grupo}`)
         .then(response => {
             return response.json();
@@ -126,6 +126,46 @@ function obtenerAlumnos(select, id_grupo){
             }
         })
         .catch(error => {
+            muestraAlerta('warning', error);
+        });
+}
+
+
+//////////////////////////////////////////////////////////
+// CREA EL DOM DE UNA TABLA CON LOS ALUMNOS DE UN GRUPO //
+//////////////////////////////////////////////////////////
+function obtenerAlumnosTabla(table){
+    fetch("./php/alumno/listar.php?id_grupo=0")
+        .then(response => {
+            return response.json();
+        })
+        .then(myJson => {
+            if(myJson.resultado == 'OK'){
+                for(let i in myJson.datos){
+                    let tr = document.createElement("tr");
+                    let nombre = document.createElement("td");
+                        nombre.appendChild(document.createTextNode(myJson.datos[i].nombre + ", " + myJson.datos[i].apellidos));
+                        tr.appendChild(nombre);
+                    let familiar = document.createElement("td");
+                    let nombreFamiliar;
+                    if(myJson.datos[i].familia_nombre == null){
+                        nombreFamiliar = document.createTextNode("Desconocido");
+                    }else{
+                        nombreFamiliar = document.createTextNode(myJson.datos[i].familia_nombre + ", " + myJson.datos[i].familia_apellidos);
+                    }
+                    familiar.appendChild(nombreFamiliar);
+                    tr.appendChild(familiar);
+                    let grupo = document.createElement("td");
+                        grupo.appendChild(document.createTextNode(myJson.datos[i].grupo));
+                        tr.appendChild(grupo);
+                    table.appendChild(tr);
+                }
+            }else{
+                muestraAlerta('warning', myJson.datos);
+            }
+        })
+        .catch(error => {
+            console.log(error);
             muestraAlerta('warning', error);
         });
 }

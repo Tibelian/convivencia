@@ -138,70 +138,15 @@ function mostrarAcceder(){
 ////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////
-// GENERA EL DOM DEL LISTADO DE AMONESTADOS //
-//////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+// GENERA EL FORMULARIO PARA AGREGAR UNA NUEVA AMONESTACIÓN //
+//////////////////////////////////////////////////////////////
 function mostrarAmonestaciones(){
 
     let principal = document.getElementById("principal");
         principal.style.justifyContent = "center";
         eliminarContenido(principal);
-        activarBoton("Amonestaciones");
-
-    let botonNueva = document.createElement("button");
-    let iconoNueva = document.createElement("i");
-        iconoNueva.classList.add("fas", "fa-plus");
-        botonNueva.appendChild(iconoNueva);
-        botonNueva.appendChild(document.createTextNode(" Nueva Amonestación"));
-        botonNueva.onclick = nuevaAmonestacion;
-        botonNueva.style.margin = "20px";
-        principal.appendChild(botonNueva);
-
-    let amonestar = document.createElement("div");
-        amonestar.classList.add("amonestar-listado", "shadow-out");
-        principal.appendChild(amonestar);
-
-    let tabla = document.createElement("table");
-        amonestar.appendChild(tabla);
-    let tr = document.createElement("tr");
-        tabla.appendChild(tr);
-    let profesor = document.createElement("th");
-    let iconoProfesor = document.createElement("i");
-        iconoProfesor.classList.add("fas", "fa-chalkboard-teacher");
-        profesor.appendChild(iconoProfesor);
-        profesor.appendChild(document.createTextNode(" PROFESOR"));
-        tr.appendChild(profesor);
-    let alumno = document.createElement("th");
-    let iconoAlumno = document.createElement("i");
-        iconoAlumno.classList.add("fas", "fa-user-graduate");
-        alumno.appendChild(iconoAlumno);
-        alumno.appendChild(document.createTextNode(" ALUMNO"));
-        tr.appendChild(alumno);
-    let causa = document.createElement("th");
-    let iconoCausa = document.createElement("i");
-        iconoCausa.classList.add("fas", "fa-clipboard-list");
-        causa.appendChild(iconoCausa);
-        causa.appendChild(document.createTextNode(" CAUSA"));
-        tr.appendChild(causa);
-    let fecha = document.createElement("th");
-    let iconoFecha = document.createElement("i");
-        iconoFecha.classList.add("fas", "fa-calendar");
-        fecha.appendChild(iconoFecha);
-        fecha.appendChild(document.createTextNode(" FECHA"));
-        tr.appendChild(fecha);
-
-    obtenerAmonestados(tabla);
-
-}
-
-
-//////////////////////////////////////////////////////////////
-// GENERA EL FORMULARIO PARA AGREGAR UNA NUEVA AMONESTACIÓN //
-//////////////////////////////////////////////////////////////
-function nuevaAmonestacion(){
-
-    let principal = document.getElementById("principal");
-    eliminarContenido(principal);
+        activarBoton("Amonestar");
 
     let amonestar = document.createElement("div");
         amonestar.classList.add("amonestar", "shadow-out");
@@ -327,7 +272,7 @@ function nuevaAmonestacion(){
         botonVolver.appendChild(iconoVolver);
         botonVolver.appendChild(document.createTextNode(" Vovler"));
         botonVolver.classList.add("volver");
-        botonVolver.onclick = mostrarAmonestaciones;
+        botonVolver.onclick = mostrarInicio;
         filaBotones.appendChild(botonVolver);
 
     let boton = document.createElement("button");
@@ -357,80 +302,19 @@ function nuevaAmonestacion(){
 }
 
 
-//////////////////////////////////
-// GENERA TABLA CON EXPULSIONES //
-//////////////////////////////////
+///////////////////////////////////////////////////////////
+// GENERA EL FORMULARIO PARA AGREGAR UNA NUEVA EXPULSIÓN //
+///////////////////////////////////////////////////////////
 function mostrarExpulsiones(){
     
     let principal = document.getElementById("principal");
         principal.style.justifyContent = "center";
         eliminarContenido(principal);
-        activarBoton("Expulsiones");
-
-    let botonNueva = document.createElement("button");
-    let iconoNueva = document.createElement("i");
-        iconoNueva.classList.add("fas", "fa-plus");
-        botonNueva.appendChild(iconoNueva);
-        botonNueva.appendChild(document.createTextNode(" Solicitar Expulsión"));
-        botonNueva.onclick = nuevaExpulsion;
-        botonNueva.style.margin = "20px";
-        principal.appendChild(botonNueva);
+        activarBoton("Expulsar");
 
     let amonestar = document.createElement("div");
-        amonestar.classList.add("amonestar-listado", "shadow-out");
-        principal.appendChild(amonestar);
-
-    let tabla = document.createElement("table");
-        amonestar.appendChild(tabla);
-    let tr = document.createElement("tr");
-        tabla.appendChild(tr);
-    let profesor = document.createElement("th");
-    let iconoProfesor = document.createElement("i");
-        iconoProfesor.classList.add("fas", "fa-chalkboard-teacher");
-        profesor.appendChild(iconoProfesor);
-        profesor.appendChild(document.createTextNode(" PROFESOR"));
-        tr.appendChild(profesor);
-    let alumno = document.createElement("th");
-    let iconoAlumno = document.createElement("i");
-        iconoAlumno.classList.add("fas", "fa-user-graduate");
-        alumno.appendChild(iconoAlumno);
-        alumno.appendChild(document.createTextNode(" ALUMNO"));
-        tr.appendChild(alumno);
-    let causa = document.createElement("th");
-    let iconoCausa = document.createElement("i");
-        iconoCausa.classList.add("fas", "fa-clipboard-list");
-        causa.appendChild(iconoCausa);
-        causa.appendChild(document.createTextNode(" CAUSA"));
-        tr.appendChild(causa);
-    let fecha = document.createElement("th");
-    let iconoFecha = document.createElement("i");
-        iconoFecha.classList.add("fas", "fa-calendar");
-        fecha.appendChild(iconoFecha);
-        fecha.appendChild(document.createTextNode(" FECHA"));
-        tr.appendChild(fecha);
-    let estado = document.createElement("th");
-    let iconoEstado = document.createElement("i");
-        iconoEstado.classList.add("fas", "fa-eye");
-        estado.appendChild(iconoEstado);
-        estado.appendChild(document.createTextNode(" ESTADO"));
-        tr.appendChild(estado);
-
-    obtenerExpulsiones(tabla);
-
-}
-
-
-///////////////////////////////////////////////////////////
-// GENERA EL FORMULARIO PARA AGREGAR UNA NUEVA EXPULSIÓN //
-///////////////////////////////////////////////////////////
-function nuevaExpulsion(){
-
-    let principal = document.getElementById("principal");
-    eliminarContenido(principal);
-
-    let amonestar = document.createElement("div");
-        amonestar.classList.add("amonestar", "shadow-out");
-        principal.appendChild(amonestar);
+    amonestar.classList.add("amonestar", "shadow-out");
+    principal.appendChild(amonestar);
 
     let filaTitulo = document.createElement("div");
         filaTitulo.classList.add("titulo");
@@ -441,7 +325,6 @@ function nuevaExpulsion(){
         titulo.appendChild(iconoNuevo);
         titulo.appendChild(document.createTextNode(" Solicitud de expulsión"));
         filaTitulo.appendChild(titulo);
-
 
     let grupoGrupos = document.createElement("div");
         grupoGrupos.classList.add("grupo");
@@ -552,7 +435,7 @@ function nuevaExpulsion(){
         botonVolver.appendChild(iconoVolver);
         botonVolver.appendChild(document.createTextNode(" Vovler"));
         botonVolver.classList.add("volver");
-        botonVolver.onclick = mostrarExpulsiones;
+        botonVolver.onclick = mostrarInicio;
         filaBotones.appendChild(botonVolver);
 
     let boton = document.createElement("button");
@@ -580,5 +463,164 @@ function nuevaExpulsion(){
 }
 
 
-function mostrarSanciones(){}
-function mostrarListado(){}
+
+//
+//
+//
+function mostrarSanciones(){
+    
+    let principal = document.getElementById("principal");
+        principal.style.justifyContent = "center";
+        eliminarContenido(principal);
+        activarBoton("Sancionar");
+
+}
+function mostrarListado(){
+    
+    let principal = document.getElementById("principal");
+        principal.style.justifyContent = "start";
+        principal.style.paddingTop = "77px";
+        eliminarContenido(principal);
+        activarBoton("Listar");
+    
+    let ul = document.createElement("ul");
+        ul.classList.add("listado");
+        principal.appendChild(ul);
+
+    let liAmonestaciones = document.createElement("li");
+        ul.appendChild(liAmonestaciones);
+    let buttonAmonestaciones = document.createElement("button");
+        buttonAmonestaciones.appendChild(document.createTextNode("Amonestaciones"));
+        liAmonestaciones.appendChild(buttonAmonestaciones);
+
+    let liExpulsiones = document.createElement("li");
+        ul.appendChild(liExpulsiones);
+    let buttonExpulsiones = document.createElement("button");
+        buttonExpulsiones.appendChild(document.createTextNode("Expulsiones"));
+        liExpulsiones.appendChild(buttonExpulsiones);
+
+    let liAlumnos = document.createElement("li");
+        ul.appendChild(liAlumnos);
+    let buttonAlumnos = document.createElement("button");
+        buttonAlumnos.appendChild(document.createTextNode("Alumnos"));
+        liAlumnos.appendChild(buttonAlumnos);
+
+    let contenedorTabla = document.createElement("div");
+        contenedorTabla.style.width = "77%";
+        contenedorTabla.style.textAlign = "center";
+        principal.appendChild(contenedorTabla);
+    let ayuda = document.createElement("p");
+        ayuda.style.margin = "20px";
+        ayuda.appendChild(document.createTextNode("HAGA CLICK EN EL BOTÓN PARA MOSTRAR EL LISTADO"));
+        contenedorTabla.appendChild(ayuda);
+
+    buttonAmonestaciones.onclick = () => {
+
+        buttonAmonestaciones.style.backgroundColor = "rgb(30, 40, 44)";
+        buttonAmonestaciones.disabled = true;
+
+        buttonAlumnos.disabled = false;
+        buttonAlumnos.style.backgroundColor = "";
+        buttonExpulsiones.disabled = false;
+        buttonExpulsiones.style.backgroundColor = "";
+
+        eliminarContenido(contenedorTabla);
+        let table = document.createElement("table");
+            table.classList.add("listado-tabla");
+            contenedorTabla.appendChild(table);
+        let thead = document.createElement("thead");
+            table.appendChild(thead);
+        let tr = document.createElement("tr");
+            thead.appendChild(tr);
+        let profesor = document.createElement("th");
+            profesor.appendChild(document.createTextNode("Profesor"));
+            tr.appendChild(profesor);
+        let alumno = document.createElement("th");
+            alumno.appendChild(document.createTextNode("Alumno"));
+            tr.appendChild(alumno);
+        let causa = document.createElement("th");
+            causa.appendChild(document.createTextNode("Causa"));
+            tr.appendChild(causa);
+        let fecha = document.createElement("th");
+            fecha.appendChild(document.createTextNode("Fecha"));
+            tr.appendChild(fecha);
+        
+        let tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            obtenerAmonestados(tbody);
+
+    }
+    buttonExpulsiones.onclick = () => {
+
+        buttonExpulsiones.style.backgroundColor = "rgb(30, 40, 44)";
+        buttonExpulsiones.disabled = true;
+
+        buttonAlumnos.disabled = false;
+        buttonAlumnos.style.backgroundColor = "";
+        buttonAmonestaciones.disabled = false;
+        buttonAmonestaciones.style.backgroundColor = "";
+
+        eliminarContenido(contenedorTabla)
+        let table = document.createElement("table");
+            table.classList.add("listado-tabla");
+            contenedorTabla.appendChild(table);
+        let thead = document.createElement("thead");
+            table.appendChild(thead);
+        let tr = document.createElement("tr");
+            thead.appendChild(tr);
+        let profesor = document.createElement("th");
+            profesor.appendChild(document.createTextNode("Profesor"));
+            tr.appendChild(profesor);
+        let alumno = document.createElement("th");
+            alumno.appendChild(document.createTextNode("Alumno"));
+            tr.appendChild(alumno);
+        let causa = document.createElement("th");
+            causa.appendChild(document.createTextNode("Causa"));
+            tr.appendChild(causa);
+        let fecha = document.createElement("th");
+            fecha.appendChild(document.createTextNode("Fecha"));
+            tr.appendChild(fecha);
+        let estado = document.createElement("th");
+            estado.appendChild(document.createTextNode("Estado"));
+            tr.appendChild(estado);
+        
+        let tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            obtenerExpulsiones(tbody);
+
+    }
+    buttonAlumnos.onclick = () => {
+
+        buttonAlumnos.style.backgroundColor = "rgb(30, 40, 44)";
+        buttonAlumnos.disabled = true;
+
+        buttonExpulsiones.disabled = false;
+        buttonExpulsiones.style.backgroundColor = "";
+        buttonAmonestaciones.disabled = false;
+        buttonAmonestaciones.style.backgroundColor = "";
+
+        eliminarContenido(contenedorTabla)
+        let table = document.createElement("table");
+            table.classList.add("listado-tabla");
+            contenedorTabla.appendChild(table);
+        let thead = document.createElement("thead");
+            table.appendChild(thead);
+        let tr = document.createElement("tr");
+            thead.appendChild(tr);
+        let nombre = document.createElement("th");
+            nombre.appendChild(document.createTextNode("Nombre y apellidos"));
+            tr.appendChild(nombre);
+        let familiar = document.createElement("th");
+            familiar.appendChild(document.createTextNode("Familiar"));
+            tr.appendChild(familiar);
+        let grupo = document.createElement("th");
+            grupo.appendChild(document.createTextNode("Grupo"));
+            tr.appendChild(grupo);
+        
+        let tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            obtenerAlumnosTabla(tbody);
+
+    }
+
+}

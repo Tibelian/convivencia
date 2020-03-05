@@ -2,15 +2,25 @@
 
 require '../conexion.php';
 
-if($_GET['id_grupo']){
+if(isset($_GET['id_grupo'])){
 
     $idG = (int) $_GET['id_grupo'];
     $conexion->select_db("bd_datos");
     $sql = "
-        SELECT id, nombre, apellidos
-        FROM alumno
-        WHERE id_grupo = $idG
+        SELECT a.id, a.nombre, a.apellidos, g.denominacion as grupo,
+        f.nombre as familia_nombre, f.apellidos as familia_apellidos,
+        f.correo as familia_correo, f.telefono as familia_telefono
+        FROM alumno a 
+        LEFT JOIN alumno_familia af
+        ON af.id_alumno = a.id
+        LEFT JOIN familia f
+        ON f.id = af.id_familia
+        LEFT JOIN grupo g
+        ON g.id = a.id_grupo 
     ";
+    if($idG != 0){
+        $sql .= "WHERE id_grupo = $idG";
+    }
     if($result = $conexion->query($sql)){
 
         if($result->num_rows > 0){
