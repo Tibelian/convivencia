@@ -189,6 +189,7 @@ function getSancionesDirectas($id){
         ON s.id = sd.id_sancion
 
         WHERE sd.id_alumno = $id
+        GROUP BY sd.id
         ORDER BY s.fecha;
     ";
     if($result = $conexion->query($sql)){

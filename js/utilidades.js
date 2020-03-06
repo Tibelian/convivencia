@@ -69,7 +69,7 @@ function muestraAlerta(css, msg, close = true){
             }
             alerta.appendChild(button);
         setTimeout(()=>{
-            if(alerta){
+            if(button){
                 button.click();
             }
         }, 5000);

@@ -314,8 +314,28 @@ function obtenerExpulsiones(tabla){
                             spanEstado.classList.add(myJson.datos[i].control_jefatura);
                         let estado = document.createElement("td");
                             spanEstado.appendChild(document.createTextNode(myJson.datos[i].control_jefatura));
+                            spanEstado.style.marginBottom = "5px";
                             estado.appendChild(spanEstado);
-                            tr.appendChild(estado);
+                            estado.appendChild(document.createElement("br"));
+
+                        if(myJson.datos[i].control_jefatura === "pendiente"){
+                            let expulsar = document.createElement("button");
+                                expulsar.appendChild(document.createTextNode("Expulsar"));
+                                expulsar.classList.add("badge");
+                            let amonestar = document.createElement("button");
+                                amonestar.appendChild(document.createTextNode("Amonestar"));
+                                amonestar.classList.add("badge", "volver");
+                            expulsar.onclick = () => {
+                                cambiarEstadoExpulsion(myJson.datos[i].id, "expulsar");
+                            }
+                            amonestar.onclick = () => {
+                                cambiarEstadoExpulsion(myJson.datos[i].id, "amonestar");
+                            }
+                            estado.appendChild(expulsar);
+                            estado.appendChild(document.createTextNode(" "));
+                            estado.appendChild(amonestar);
+                        }
+                        tr.appendChild(estado);
                         tabla.appendChild(tr);
                     }
                 }
@@ -328,6 +348,27 @@ function obtenerExpulsiones(tabla){
         });
 }
 
+
+
+/////////////////////////////////////////
+// ACTUALIZA EL ESTADO DE LA EXPULSIÓN //
+/////////////////////////////////////////
+function cambiarEstadoExpulsion(id, estado){
+    fetch(`./php/expulsion/gestionar.php?id=${id}&estado=${estado}`)
+    .then(r1 => {
+        return r1.json();
+    })
+    .then(js =>{
+        if(js.resultado === "OK"){
+            muestraAlerta("success", js.datos);
+        }else{
+            muestraAlerta("warning", js.datos);
+        }
+    })
+    .catch(err =>{
+        muestraAlerta("warning", err);
+    });
+}
 
 
 //////////////////////////////////////////////////////////

@@ -11,6 +11,7 @@ if($_GET['id_profesor']){
         INNER JOIN profesor_grupo_asignatura p
         ON p.id_grupo = g.id
         WHERE p.id_profesor = $idP
+        GROUP BY g.id
     ";
     if($result = $conexion->query($sql)){
 

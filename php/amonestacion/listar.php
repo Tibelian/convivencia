@@ -28,7 +28,7 @@ if($result = $conexion->query($sql)){
     }
 
 }else{
-    $msg = ["resultado" => "ERROR", "datos" => "No se han podido ejecutar la consulta 'obtenerAmonestados' - " . $conexion->error ];
+    $msg = ["resultado" => "ERROR", "datos" => "No se han podido ejecutar la consulta 'amonestacion/listar' - " . $conexion->error ];
 }
 
 

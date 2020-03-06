@@ -45,7 +45,12 @@ function obtenerBotones(profesor){
             botonSalir.appendChild(document.createTextNode("Salir"));
             botonSalir.onclick = salir;
 
-        BOTONES.push(botonAmonstacion, botonExpulsion, botonSancion, botonListado, botonSalir);
+        if(profesor.perfil === "JefeDeEstudios"){
+            BOTONES.push(botonAmonstacion, botonExpulsion, botonSancion, botonListado, botonSalir);
+        }else{
+            BOTONES.push(botonAmonstacion, botonExpulsion, botonSalir);
+        }
+
 
     }else{
         
@@ -55,14 +60,16 @@ function obtenerBotones(profesor){
             botonAcceder.appendChild(iconoAcceder);
             botonAcceder.appendChild(document.createTextNode("Acceder"));
             botonAcceder.onclick = mostrarAcceder;
+        /*
         let botonClaveOlvidada = document.createElement("button");
         let iconoClave = document.createElement("i");
             iconoClave.classList.add("fas", "fa-key");
             botonClaveOlvidada.appendChild(iconoClave);
             botonClaveOlvidada.appendChild(document.createTextNode("Clave olvidada"));
             botonClaveOlvidada.onclick = mostrarClavePerdida;
+        */
 
-        BOTONES.push(botonAcceder, botonClaveOlvidada);
+        BOTONES.push(botonAcceder);
 
     }
 }

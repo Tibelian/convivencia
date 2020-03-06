@@ -30,6 +30,7 @@ if(isset($_GET['id_grupo'])){
             $sql .= " WHERE a.dni = '$dni' ";
         }
     }
+    $sql .= " ORDER BY a.id_grupo; ";
     if($result = $conexion->query($sql)){
 
         if($result->num_rows > 0){

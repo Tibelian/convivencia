@@ -440,14 +440,9 @@ span.pendiente{
     background-color: rgba(150, 85, 0, 0.7);
     font-size: 14px;
 }
-span.expulsado{
+span.aprobada{
     padding: 3px;
     background-color: rgba(67, 150, 0, 0.7);
-    font-size: 14px;
-}
-span.cancelada{
-    padding: 3px;
-    background-color: rgba(150, 22, 0, 0.7);
     font-size: 14px;
 }
 
