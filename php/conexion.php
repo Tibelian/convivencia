@@ -6,3 +6,5 @@ if($conexion->connect_error){
     echo json_encode(["resultado" => "ERROR", "datos" => "La conexión a la base de datos ha fallado"]);
     exit;
 }
+
+$conexion->set_charset("utf8");

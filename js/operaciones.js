@@ -329,19 +329,188 @@ function obtenerExpulsiones(tabla){
 }
 
 
+
+//////////////////////////////////////////////////////////
+// DEVUELVE LAS SANCIONES DE UN ALUMNO INDICANDO SU DNI //
+//////////////////////////////////////////////////////////
+function obtenerSanciones(alumnoDiv, tbody, dni, nuevaSancion){
+    fetch(`./php/sancion/listar.php?dni=${dni}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(myJson => {
+            if(myJson.resultado === "OK"){
+
+                eliminarContenido(tbody);
+                eliminarContenido(alumnoDiv);
+
+                if(myJson.datos.length === 0){
+                    muestraAlerta("warning", `No existe ningún alumno con el DNI '${dni}'`);
+                }else{
+
+                    let alumnoP = document.createElement("p");
+                        alumnoP.style.fontWeight = "bold";
+                        alumnoP.style.marginBottom = "10px";
+                        alumnoP.appendChild(document.createTextNode(myJson.datos.alumno.nombre + " " + myJson.datos.alumno.apellidos));
+                        alumnoDiv.appendChild(alumnoP);
+                    let directa = document.createElement("button");
+                        directa.appendChild(document.createTextNode("Añadir sanción directa"));
+                        directa.onclick = () => {
+                            eliminarContenido(nuevaSancion);
+                            let h3 = document.createElement("h4");
+                                h3.appendChild(document.createTextNode("Sanción directa"));
+                                nuevaSancion.appendChild(h3);
+                            generarNuevaSancion(myJson.datos.alumno, nuevaSancion);
+                        }
+                        alumnoDiv.appendChild(directa);
+
+                    if(myJson.datos.amonestaciones.length === 0 && myJson.datos.expulsiones.length === 0 && myJson.datos.sanciones_directas.length === 0){
+                        let tr = document.createElement("tr");
+                        let td = document.createElement("td");
+                            td.style.textAlign = "center";
+                            td.colSpan = "6";
+                        td.appendChild(document.createTextNode("ESTE ALUMNO NO TIENE AMONESTACIONES, EXPULSIONES Y TAMPOCO SANCIONES"));
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                    }
+
+                    for(let i = 0; i < myJson.datos.amonestaciones.length; i++){
+                        let incidencia = document.createElement("span");
+                            incidencia.classList.add("badge", "warning");
+                            incidencia.appendChild(document.createTextNode("Amonestación"));
+                        let sancion = myJson.datos.amonestaciones[i].sancion.denominacion;
+                        if(!sancion){
+                            let button = document.createElement("button");
+                                button.classList.add("badge");
+                                button.appendChild(document.createTextNode("+ Añadir"));
+                                button.onclick = ()=>{
+                                    eliminarContenido(nuevaSancion);
+                                    let h3 = document.createElement("h4");
+                                        h3.appendChild(document.createTextNode("Sancionar amonestación"));
+                                        nuevaSancion.appendChild(h3);
+                                    generarNuevaSancion(myJson.datos.alumno, nuevaSancion, myJson.datos.amonestaciones[i], "amonestacion");
+                                };
+                            sancion = button;
+                        }
+                        let data = [
+                            myJson.datos.amonestaciones[i].profesor.nombre + " " + myJson.datos.amonestaciones[i].profesor.apellidos,
+                            myJson.datos.amonestaciones[i].profesor.asignatura,
+                            incidencia,
+                            myJson.datos.amonestaciones[i].causa,
+                            formatoFecha(myJson.datos.amonestaciones[i].fecha),
+                            sancion
+                        ];
+                        let filaAmonestacion = generaFila(data);
+                        tbody.appendChild(filaAmonestacion);
+                    }
+
+                    for(let i = 0; i < myJson.datos.expulsiones.length; i++){
+                        let incidencia = document.createElement("span");
+                            incidencia.classList.add("badge", "danger");
+                            incidencia.appendChild(document.createTextNode("Expulsión"));
+                            let sancion = myJson.datos.expulsiones[i].sancion.denominacion;
+                            if(!sancion){
+                                let button = document.createElement("button");
+                                    button.classList.add("badge");
+                                    button.appendChild(document.createTextNode("+ Añadir"));
+                                    button.onclick = ()=>{
+                                        eliminarContenido(nuevaSancion);
+                                        let h3 = document.createElement("h4");
+                                            h3.appendChild(document.createTextNode("Sancionar expulsión"));
+                                            nuevaSancion.appendChild(h3);
+                                        generarNuevaSancion(myJson.datos.alumno, nuevaSancion, myJson.datos.expulsiones[i], "expulsion");
+                                    };
+                                sancion = button;
+                            }
+                        let data = [
+                            myJson.datos.expulsiones[i].profesor.nombre + " " + myJson.datos.expulsiones[i].profesor.apellidos,
+                            myJson.datos.expulsiones[i].profesor.asignatura,
+                            incidencia,
+                            myJson.datos.expulsiones[i].causa,
+                            formatoFecha(myJson.datos.expulsiones[i].fecha),
+                            sancion
+                        ];
+                        let filaExpulsion = generaFila(data);
+                        tbody.appendChild(filaExpulsion);
+                    }
+
+                    for(let i = 0; i < myJson.datos.sanciones_directas.length; i++){
+                        let incidencia = document.createElement("span");
+                            incidencia.classList.add("badge", "info");
+                            incidencia.appendChild(document.createTextNode("Directa"));
+                        let data = [
+                            myJson.datos.sanciones_directas[i].profesor.nombre + " " + myJson.datos.sanciones_directas[i].profesor.apellidos,
+                            myJson.datos.sanciones_directas[i].profesor.asignatura,
+                            incidencia,
+                            "---",
+                            formatoFecha(myJson.datos.sanciones_directas[i].fecha),
+                            myJson.datos.sanciones_directas[i].denominacion
+                        ];
+                        let filaDirecta = generaFila(data);
+                        tbody.appendChild(filaDirecta);
+                    }
+
+                }
+
+            }else{
+                muestraAlerta("warning", myJson.datos, false);
+            }
+        })
+        .catch(error => {
+            muestraAlerta("warning", error, false);
+        });
+}
+
+
+
+///////////////////////////////////////////
+// GUARDA LA SANCIÓN EN LA BASE DE DATOS //
+///////////////////////////////////////////
+function insertarSancion(cancelar, alumno, sancion, falta = null, tipoFalta = null){
+    let url = `./php/sancion/insertar.php?id_alumno=${alumno.id}&sancion=${sancion.sancion}&fecha=${sancion.fecha}&id_profesor=${PROFESOR.id}`;
+    if(falta !== null){
+        url += `&falta=${tipoFalta}&id_falta=${falta.id}`;
+    }
+    fetch(url)
+        .then(response => {
+            return response.json();
+        })
+        .then(myJson =>{
+            if(myJson.resultado == "OK"){
+                muestraAlerta("success", myJson.datos);
+                cancelar.click();
+            }else{
+                muestraAlerta("warning", myJson.datos, false);
+            }
+        })
+        .catch(error =>{
+            muestraAlerta("warning", error, false);
+        })
+}
+
+
+
 /////////////////////////////////////////
 // GENERA DOM DE UNA TABLA CON UN JSON //
 /////////////////////////////////////////
 function crearCuerpoTabla(myData){
     let tbody = document.createElement("tbody");
     for(let i in myData){
-        let tr = document.createElement("tr");
-        for(let k in myData[i]){
-            let td = document.createElement("td");
-            td.appendChild(document.createTextNode(myData[i][k]));
-            tr.appendChild(td);
-        }
+        let tr = generaFila(myData[i]);
         tbody.appendChild(tr);
     }
     return tbody;
+}
+function generaFila(data){
+    let tr = document.createElement("tr");
+    for(let i in data){
+        let td = document.createElement("td");
+        if(data[i] instanceof Element){
+            td.appendChild(data[i]);
+        }else{
+            td.appendChild(document.createTextNode(data[i]));
+        }
+        tr.appendChild(td);
+    }
+    return tr;
 }

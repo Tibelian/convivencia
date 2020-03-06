@@ -68,6 +68,11 @@ function muestraAlerta(css, msg, close = true){
                 alerta.parentNode.removeChild(alerta);
             }
             alerta.appendChild(button);
+        setTimeout(()=>{
+            if(alerta){
+                button.click();
+            }
+        }, 5000);
     }
     contenedor.appendChild(alerta);
     

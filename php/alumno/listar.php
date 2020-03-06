@@ -7,7 +7,7 @@ if(isset($_GET['id_grupo'])){
     $idG = (int) $_GET['id_grupo'];
     $conexion->select_db("bd_datos");
     $sql = "
-        SELECT a.id, a.nombre, a.apellidos, g.denominacion as grupo,
+        SELECT a.id, a.nombre, a.apellidos, g.denominacion as grupo, a.dni,
         f.nombre as familia_nombre, f.apellidos as familia_apellidos,
         f.correo as familia_correo, f.telefono as familia_telefono
         FROM alumno a 
@@ -19,7 +19,16 @@ if(isset($_GET['id_grupo'])){
         ON g.id = a.id_grupo 
     ";
     if($idG != 0){
-        $sql .= "WHERE id_grupo = $idG";
+        $sql .= " WHERE a.id_grupo = $idG ";
+        if(isset($_GET['dni'])){
+            $dni = $conexion->real_escape_string($_GET['dni']);
+            $sql .= " AND a.id = '$dni' ";
+        }
+    }else{
+        if(isset($_GET['dni'])){
+            $dni = $conexion->real_escape_string($_GET['dni']);
+            $sql .= " WHERE a.dni = '$dni' ";
+        }
     }
     if($result = $conexion->query($sql)){
 
@@ -34,7 +43,7 @@ if(isset($_GET['id_grupo'])){
         }
 
     }else{
-        $msg = ["resultado" => "ERROR", "datos" => "No se han podido ejecutar la consulta 'obtenerAlumnos' - " . $conexion->error];
+        $msg = ["resultado" => "ERROR", "datos" => "No se han podido ejecutar la consulta 'alumno/listar' - " . $conexion->error];
     }
 
 }else{

@@ -283,7 +283,7 @@ function mostrarAmonestaciones(){
         boton.classList.add("enviar");
         boton.onclick = () => {
             let causa = 0;
-            if(inputCausa){
+            if(selectCausa.value === "otra"){
                 causa = inputCausa.value;
             }else{
                 causa = selectCausa.value;
@@ -295,6 +295,10 @@ function mostrarAmonestaciones(){
                 causa: causa, 
                 fecha: inputFecha.value
             };
+            console.log(datos);
+            console.log(causa);
+            console.log(inputCausa);
+            console.log(selectCausa);
             guardarAmonestacion(datos);
         };
         filaBotones.appendChild(boton);
@@ -464,17 +468,194 @@ function mostrarExpulsiones(){
 
 
 
-//
-//
-//
+/////////////////////////////////////
+// GENERA EL DOM DE LAS SANCIONES ///
+/////////////////////////////////////
 function mostrarSanciones(){
     
     let principal = document.getElementById("principal");
-        principal.style.justifyContent = "center";
+        principal.style.justifyContent = "start";
+        principal.style.paddingTop = "77px";
         eliminarContenido(principal);
         activarBoton("Sancionar");
 
+    let buscador = document.createElement("div");
+        buscador.style.padding = "20px";
+        buscador.style.backgroundColor = "#fff";
+        buscador.style.width = "77%";
+        buscador.style.border = "1px solid #d9d9d9";
+        buscador.style.display = "flex";
+        principal.appendChild(buscador);
+    let buscadorDiv = document.createElement("div");
+        buscadorDiv.style.width = "50%";
+        buscador.appendChild(buscadorDiv);
+    let h2 = document.createElement("h2");
+        h2.style.marginBottom = "5px";
+        h2.appendChild(document.createTextNode("Sancionar"));
+        buscadorDiv.appendChild(h2);
+    let input = document.createElement("input");
+        input.type = "text";
+        input.style.marginRight = "10px";
+        input.placeholder = "DNI alumno";
+        buscadorDiv.appendChild(input);
+    let button = document.createElement("button");
+        button.appendChild(document.createTextNode("BUSCAR"));
+        buscadorDiv.appendChild(button);
+
+    let alumnoDiv = document.createElement("div");
+        alumnoDiv.style.textAlign = "center";
+        alumnoDiv.style.width = "50%";
+        buscador.appendChild(alumnoDiv);
+
+    let table = document.createElement("table");
+        table.style.width = "77%";
+        table.classList.add("listado-tabla");
+        principal.appendChild(table);
+
+    let nuevaSancion = document.createElement("div");
+        nuevaSancion.style.width = "77%";
+        nuevaSancion.style.marginTop = "20px";
+        principal.appendChild(nuevaSancion);
+
+    button.onclick = () => {
+
+        eliminarContenido(table);
+        eliminarContenido(nuevaSancion);
+        nuevaSancion.classList.remove("sancionar");
+
+        let thead = document.createElement("thead");
+            table.appendChild(thead);
+        let trHead = document.createElement("tr");
+            thead.appendChild(trHead);
+        let profesorTH = document.createElement("th");
+            profesorTH.appendChild(document.createTextNode("Profesor"));
+            trHead.appendChild(profesorTH);
+        let asignaturaTH = document.createElement("th");
+            asignaturaTH.appendChild(document.createTextNode("Asignatura"));
+            trHead.appendChild(asignaturaTH);
+        let incidenciaTH = document.createElement("th");
+            incidenciaTH.appendChild(document.createTextNode("Falta"));
+            trHead.appendChild(incidenciaTH);
+        let causaTH = document.createElement("th");
+            causaTH.appendChild(document.createTextNode("Causa"));
+            trHead.appendChild(causaTH);
+        let fechaTH = document.createElement("th");
+            fechaTH.appendChild(document.createTextNode("Fecha"));
+            trHead.appendChild(fechaTH);
+        let sancionTH = document.createElement("th");
+            sancionTH.appendChild(document.createTextNode("Sanción"));
+            trHead.appendChild(sancionTH);
+        let tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+
+        obtenerSanciones(alumnoDiv, tbody, input.value, nuevaSancion);
+
+    }
+    input.onkeyup = (event) => {
+        if(event.keyCode === 13){
+            button.click();
+        }
+    }
+    input.focus();
+
 }
+
+
+
+//
+//
+//
+function generarNuevaSancion(alumno, contenedorNuevaSancion, falta = null, tipoFalta = null){
+    
+    contenedorNuevaSancion.classList.add("sancionar")
+    let div = document.createElement("div");
+        div.style.padding = "15px";
+        div.style.display = "flex";
+        div.style.justifyContent = "center";
+        div.style.alignItems = "center";
+        div.style.flexDirection = "column";
+        contenedorNuevaSancion.appendChild(div);
+
+    if(falta !== null){
+        let ul = document.createElement("ul");
+            ul.style.width = "90%";
+            ul.style.marginBottom = "15px";
+            ul.style.listStyleType = "none";
+            ul.style.display = "flex";
+            ul.style.flexWrap = "wrap";
+            ul.style.justifyContent = "space-around";
+            div.appendChild(ul);
+        let liFecha = document.createElement("li");
+            liFecha.appendChild(document.createTextNode(`Fecha: ${formatoFecha(falta.fecha)}`));
+            ul.appendChild(liFecha);
+        let liProfesor = document.createElement("li");
+            liProfesor.appendChild(document.createTextNode(`Profesor: ${falta.profesor.nombre} ${falta.profesor.apellidos}`));
+            ul.appendChild(liProfesor);
+        let liCausa = document.createElement("li");
+            liCausa.style.width = "100%";
+            liCausa.style.textAlign = "center";
+            liCausa.appendChild(document.createTextNode("Causa:"));
+            liCausa.appendChild(document.createElement("br"));
+            liCausa.appendChild(document.createTextNode(falta.causa));
+            ul.appendChild(liCausa);
+    }
+
+    let textarea = document.createElement("textarea");
+        textarea.rows = "4";
+        textarea.style.width = "80%";
+        textarea.placeholder = "INTROUZCA LA SANCIÓN AQUÍ...";
+        div.appendChild(textarea);
+
+    let fechaObj = new Date();
+    let d = fechaObj.getDate();
+    let m = fechaObj.getMonth() + 1;
+    let a = fechaObj.getFullYear();
+    if(m < 10){
+        m = `0${m}`;
+    }
+    if(d < 10){
+        d = `0${d}`;
+    }
+    let fecha = document.createElement("input");
+        fecha.type = "date";
+        fecha.placeholder = "FECHA";
+        fecha.style.marginTop = "10px";
+        fecha.style.width = "20%";
+        fecha.value = `${a}-${m}-${d}`;
+        div.appendChild(fecha);
+        
+    let botones = document.createElement("div");
+        botones.style.marginTop = "15px";
+        botones.style.width = "100%";
+        botones.style.display = "flex";
+        botones.style.justifyContent = "space-around";
+        div.appendChild(botones);
+    let guardar = document.createElement("button");
+        guardar.appendChild(document.createTextNode("GUARDAR"));
+        botones.appendChild(guardar);
+
+    let cancelar = document.createElement("button");
+        cancelar.appendChild(document.createTextNode("CANCELAR"));
+        cancelar.classList.add("volver");
+        botones.appendChild(cancelar);
+
+    guardar.onclick = () => {
+        insertarSancion(cancelar, alumno, {sancion: textarea.value, fecha: fecha.value}, falta, tipoFalta);
+    }
+    cancelar.onclick = () => {
+        contenedorNuevaSancion.classList.remove("sancionar");
+        eliminarContenido(contenedorNuevaSancion);
+    }
+
+
+
+}
+
+
+
+/////////////////////////////////////////////////////////
+// GENERA UN DOM CON LOS LISTADOS DE AMON, EXPU Y ALUM //
+/////////////////////////////////////////////////////////
 function mostrarListado(){
     
     let principal = document.getElementById("principal");
@@ -508,6 +689,7 @@ function mostrarListado(){
     let contenedorTabla = document.createElement("div");
         contenedorTabla.style.width = "77%";
         contenedorTabla.style.textAlign = "center";
+        contenedorTabla.style.overflowX = "auto";
         principal.appendChild(contenedorTabla);
     let ayuda = document.createElement("p");
         ayuda.style.margin = "20px";

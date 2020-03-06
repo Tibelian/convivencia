@@ -270,6 +270,19 @@ amonestaciones
 }
 
 
+.sancionar{
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.sancionar h4{
+    background-color: rgb(30, 40, 44);
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 
 
 .shadow-in {
@@ -375,6 +388,34 @@ alertas
     background-color: rgb(0, 150, 0);
 }
 
+/*
+close alert animation
+*/
+.alert::after{
+    position: absolute;
+    content: "";
+    bottom: -3px;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    background-color: red;
+    animation: closeAlert 5s linear;
+}
+.alert.warning::after{
+    background-color: rgb(200, 0, 0);
+}
+.alert.success::after{
+    background-color: rgb(0, 200, 0);
+}
+@keyframes closeAlert {
+    0% {
+        width: 100%;
+    }
+    100% { 
+        width: 0;
+    }
+}
+
 
 
 
@@ -420,12 +461,6 @@ span.cancelada{
 }
 
 
-@media only screen and (max-width: 900px) {   
-    main{
-        width: 100%;
-    }
-}
-
 
 .listado{
     display: flex;
@@ -442,6 +477,7 @@ span.cancelada{
     border-collapse: collapse;
     text-align: center;
     margin-top: 20px;
+    font-size: 13px;
 }
 .listado-tabla thead th{
     background-color: rgb(30, 40, 44);
@@ -453,6 +489,32 @@ span.cancelada{
 .listado-tabla tbody td{
     padding: 5px;
     border: 1px solid rgba(0, 0, 0, .1);
+}
+
+
+.badge{
+    padding: 3px;
+    font-size: 12px;
+    border-radius: 2px;
+    display: inline-block;
+}
+.badge.warning{
+    background-color: rgba(150, 85, 0, 0.7);
+}
+.badge.danger{
+    background-color: rgba(150, 22, 0, 0.7);
+}
+.badge.info{
+    background-color: rgba(150, 40, 91, 0.7);
+}
+
+@media only screen and (max-width: 900px) {   
+    main{
+        width: 100%;
+    }
+    .listado li button{
+        width: 125px;
+    }
 }
 
 
