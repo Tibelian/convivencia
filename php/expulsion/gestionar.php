@@ -11,7 +11,7 @@ if(isset($_GET['id']) && isset($_GET['estado'])){
     if($_GET['estado'] == "expulsar"){
         $sql = "
             UPDATE expulsion 
-            SET control_jefatura = 'aprobada'
+            SET control_jefatura = 'aprobada', fecha_jefatura = NOW()
             WHERE id = $id;
         ";
     }else if($_GET['estado'] == "amonestar"){
@@ -36,43 +36,56 @@ if(isset($_GET['id']) && isset($_GET['estado'])){
                         VALUES(NULL, '{$data['denominacion']}');
                     ";
 
+                    $idCausa = 'NULL';
                     if($conexion->query($insertCaus)){
-
                         $idCausa = $conexion->insert_id;
-                        $insertAmon = "
-                            INSERT INTO amonestacion(
-                                id, 
-                                id_alumno, 
-                                id_profesor, 
-                                id_asignatura, 
-                                id_causa, 
-                                id_sancion, 
-                                fecha
-                            )
-                            VALUES(
-                                NULL, 
-                                {$data['id_alumno']}, 
-                                {$data['id_profesor']}, 
-                                {$data['id_asignatura']}, 
-                                {$idCausa}, 
-                                {$data['id_sancion']}, 
-                                {$data['fecha']}
-                            );
+                    }else{
+                        $buscarCausa = "
+                            SELECT id 
+                            FROM causa_amonestacion 
+                            WHERE denominacion LIKE '{$data['denominacion']}'
                         ";
-                        if($conexion->query($insertAmon)){
-
-                            if($conexion->query("DELETE FROM expulsion WHERE id = $id")){
-                                $msg = ["resultado" => "OK", "datos" => "La expulsión se ha convertido en una amonestación"];
-                            }else{
-                                $msg = ["resultado" => "ERROR", "datos" => "ERROR AL ELIMINAR LA EXPULSIÓN: " . $conexion->error];
-                            }
-
+                        if($resultCausa = $conexion->query($buscarCausa)){
+                            $idCausa = $resultCausa->fetch_assoc()['id'];
                         }else{
-                            $msg = ["resultado" => "ERROR", "datos" => "ERROR AL INSERTAR LA AMONESTACIÓN: " . $conexion->error];
+                            $msg = ["resultado" => "ERROR", "datos" => "NO SE HA PODIDO GUARDAR LA CAUSA" . $conexion->error];
+                        }
+                    }
+
+                    $idSancion = 'NULL';
+                    if(!empty($data['id_sancion'])){
+                        $idSancion = $data['id_sancion'];
+                    }
+                    $insertAmon = "
+                        INSERT INTO amonestacion(
+                            id, 
+                            id_alumno, 
+                            id_profesor, 
+                            id_asignatura, 
+                            id_causa, 
+                            id_sancion, 
+                            fecha
+                        )
+                        VALUES(
+                            NULL, 
+                            {$data['id_alumno']}, 
+                            {$data['id_profesor']}, 
+                            {$data['id_asignatura']}, 
+                            {$idCausa}, 
+                            {$idSancion}, 
+                            '{$data['fecha']}'
+                        );
+                    ";
+                    if($conexion->query($insertAmon)){
+
+                        if($conexion->query("DELETE FROM expulsion WHERE id = $id")){
+                            $msg = ["resultado" => "OK", "datos" => "La expulsión se ha convertido en una amonestación"];
+                        }else{
+                            $msg = ["resultado" => "ERROR", "datos" => "ERROR AL ELIMINAR LA EXPULSIÓN: " . $conexion->error];
                         }
 
                     }else{
-                        $msg = ["resultado" => "ERROR", "datos" => "ERROR AL INSERTAR CAUSA EN AMONESTACIÓN: " . $conexion->error];
+                        $msg = ["resultado" => "ERROR", "datos" => "ERROR AL INSERTAR LA AMONESTACIÓN: " . $conexion->error . " '$insertAmon' "];
                     }
 
                 }else{

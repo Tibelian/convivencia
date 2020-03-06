@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-03-2020 a las 22:31:42
+-- Tiempo de generación: 07-03-2020 a las 00:21:33
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -50,7 +50,14 @@ INSERT INTO `amonestacion` (`id`, `id_alumno`, `id_profesor`, `id_asignatura`, `
 (5, 4, 1, 1, 11, NULL, '2020-02-28'),
 (7, 1, 1, 1, 13, 4, '2020-02-28'),
 (8, 1, 3, 4, 7, NULL, '2020-03-06'),
-(9, 1, 1, 1, 16, 5, '0000-00-00');
+(9, 1, 1, 1, 16, 5, '2020-03-18'),
+(10, 12, 5, 5, 7, NULL, '2020-03-06'),
+(11, 12, 5, 5, 7, NULL, '2020-03-06'),
+(12, 13, 5, 5, 17, NULL, '2020-03-10'),
+(13, 5, 1, 1, 27, NULL, '2020-03-10'),
+(14, 8, 1, 1, 28, NULL, '2020-03-04'),
+(15, 4, 1, 1, 29, NULL, '2020-03-04'),
+(16, 10, 1, 1, 18, NULL, '2020-03-04');
 
 -- --------------------------------------------------------
 
@@ -68,15 +75,20 @@ CREATE TABLE `causa_amonestacion` (
 --
 
 INSERT INTO `causa_amonestacion` (`id`, `denominacion`) VALUES
-(7, 'Falta de respeto'),
-(8, 'Dormir en clase'),
-(9, 'Interrupciones en clases'),
+(28, 'Acosar a sus compañer@s de clase'),
+(18, 'Demasiado guapo'),
 (10, 'Distracción de compañeros'),
+(8, 'Dormir en clase'),
+(7, 'Falta de respeto'),
 (11, 'Gritar en clase'),
-(13, 'Varios retrasos'),
-(14, 'Romper material escolar'),
+(9, 'Interrupciones en clases'),
+(24, 'Llevar armas'),
+(16, 'No asistir a las charlas obligatorias'),
 (15, 'No hacer los deberes'),
-(16, 'No asistir a las charlas obligatorias');
+(17, 'Ofensas verbales o físicas,'),
+(14, 'Romper material escolar'),
+(25, 'Ser muy feo'),
+(13, 'Varios retrasos');
 
 -- --------------------------------------------------------
 
@@ -126,12 +138,10 @@ CREATE TABLE `expulsion` (
 --
 
 INSERT INTO `expulsion` (`id`, `id_alumno`, `id_profesor`, `id_asignatura`, `id_causa`, `id_sancion`, `control_jefatura`, `fecha_jefatura`, `fecha`) VALUES
-(2, 2, 1, 1, 1, NULL, 'aprobada', '0000-00-00', '2020-02-28'),
-(3, 3, 1, 1, 5, NULL, 'pendiente', NULL, '2020-03-04'),
-(4, 4, 1, 1, 2, NULL, 'pendiente', NULL, '2020-03-04'),
-(5, 5, 1, 1, 6, NULL, 'pendiente', NULL, '2020-03-04'),
-(6, 8, 1, 1, 9, NULL, 'pendiente', NULL, '2020-03-04'),
-(7, 10, 1, 1, 12, NULL, 'pendiente', NULL, '2020-03-04');
+(2, 2, 1, 1, 1, 9, 'aprobada', '0000-00-00', '2020-02-28'),
+(3, 3, 1, 1, 5, NULL, 'aprobada', NULL, '2020-03-04'),
+(8, 3, 2, 2, 5, NULL, 'aprobada', '2020-03-07', '2020-03-06'),
+(9, 6, 4, 9, 11, NULL, 'aprobada', '2020-03-07', '2020-03-07');
 
 -- --------------------------------------------------------
 
@@ -179,7 +189,8 @@ INSERT INTO `sancion` (`id`, `fecha`, `denominacion`) VALUES
 (5, '2020-03-06', 'prueba sanción'),
 (6, '2020-03-06', 'directa 123...'),
 (7, '2020-03-09', 'Ayudar al conserje con las tareas'),
-(8, '2020-02-27', 'Ha sido expulsada por su mal comportamiento, duran');
+(8, '2020-02-27', 'Ha sido expulsada por su mal comportamiento, duran'),
+(9, '2020-03-06', 'Limpieza en el aula de música');
 
 -- --------------------------------------------------------
 
@@ -218,7 +229,8 @@ ALTER TABLE `amonestacion`
 -- Indices de la tabla `causa_amonestacion`
 --
 ALTER TABLE `causa_amonestacion`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `denominacion` (`denominacion`);
 
 --
 -- Indices de la tabla `causa_expulsion`
@@ -259,13 +271,13 @@ ALTER TABLE `sancion_directa`
 -- AUTO_INCREMENT de la tabla `amonestacion`
 --
 ALTER TABLE `amonestacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `causa_amonestacion`
 --
 ALTER TABLE `causa_amonestacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `causa_expulsion`
@@ -277,13 +289,13 @@ ALTER TABLE `causa_expulsion`
 -- AUTO_INCREMENT de la tabla `expulsion`
 --
 ALTER TABLE `expulsion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `sancion`
 --
 ALTER TABLE `sancion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `sancion_directa`
